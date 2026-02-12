@@ -27,3 +27,7 @@ ovinetech.db
 .idea/
 venv/
 .env
+# Base de Datos (¡Importante!)
+*.db
+*.sqlite3
+ovinetech.db
