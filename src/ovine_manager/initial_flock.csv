@@ -1,0 +1,7 @@
+caravana_visual,rfid_tag,raza,sexo,fecha_nacimiento,peso_kg,estado
+ARG-101,RFID-0001,Texel,Hembra,2023-01-15,55.5,Gestación
+ARG-102,RFID-0002,Friesian,Macho,2022-10-10,80.2,Servicio
+ARG-103,,Pampinta,F,2024-03-20,30.0,Crecimiento
+ARG-104,RFID-0004,Cruza,M,2024-01-01,45.0,Engorde
+ARG-105,RFID-0005,Otra,Hembra,2020-05-05,60.0,Lactancia
+INVALID-001,,Alien,X,2099-01-01,-5.0,Unknown

@@ -1,3 +1,8 @@
+from datetime import datetime, timedelta
+from typing import List
+from .models import Equipment, CleaningLog
+
+
 class MaintenanceAgent:
     def __init__(self, db_connection):
         self.db = db_connection # Simulación de conexión a base de datos
@@ -53,3 +58,34 @@ class MaintenanceAgent:
         if not log.is_successful():
             print(" ALERTA: Intento de limpieza fallido registrado.")
         self.db.save(log)
+
+    def check_critical_sanitization_status(self) -> List[str]:
+        """
+        Escanea TODOS los equipos críticos. 
+        Retorna una lista de alertas si alguno excedió su ventana de limpieza.
+        """
+        alerts = []
+        # Imaginemos que obtenemos todos los equipos que requieren sanitización
+        critical_equipment = self.db.get_all_equipment(requires_sanitization=True)
+
+        for eq in critical_equipment:
+            last_log = self._get_last_log(eq.id)
+            
+            # CASO A: Nunca se ha limpiado (y ya debería estar operativo)
+            if not last_log:
+                alerts.append(f"URGENTE: {eq.name} nunca ha registrado limpieza.")
+                continue
+
+            # CASO B: Se limpió, pero hace demasiado tiempo (Regla de las 12 horas)
+            # Nota: Podrías usar eq.max_sterile_hours, o una regla fija de 12h para alertas
+            hours_since_cleaning = (datetime.now() - last_log.timestamp).total_seconds() / 3600
+            
+            # Umbral de alerta: Si pasaron 12 horas desde la última limpieza
+            if hours_since_cleaning > 12:
+                alerts.append(
+                    f"ALERTA SANITARIA: {eq.name} lleva {int(hours_since_cleaning)} horas sin limpieza. "
+                    f"Riesgo de contaminación bacteriana."
+                )
+        
+        return alerts
+        

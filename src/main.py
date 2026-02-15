@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+
 from src.shared.database import create_db_and_tables
 # Import models to register them with SQLModel metadata
 from src.greenhouse import models as greenhouse_models
@@ -12,10 +13,15 @@ from src.greenhouse.router import router as greenhouse_router
 from src.ovine_manager.router import router as ovine_manager_router
 from src.cheese_factory.router import router as cheese_factory_router
 
+from src.maintenance.scheduler import start_scheduler
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     create_db_and_tables()
+    scheduler = start_scheduler()
     yield
+    scheduler.shutdown()
 
 app = FastAPI(title="OvineTech ERP", lifespan=lifespan)
 

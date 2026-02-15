@@ -1,0 +1,7 @@
+Row 7: Validation Error - 2 validation errors for AnimalCreate
+raza
+  Input should be 'Friesian', 'Texel', 'Pampinta', 'Cruza', 'Corriedale' or 'Otra' [type=enum, input_value='Alien', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/enum
+sexo
+  Input should be 'M' or 'F' [type=enum, input_value='X', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/enum
