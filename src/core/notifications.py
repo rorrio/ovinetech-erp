@@ -3,7 +3,7 @@ import os
 
 # Idealmente, estos valores vienen de variables de entorno (.env)
 # Pero puedes pegarlos aquí temporalmente para probar.
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_TOKEN", ")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_TOKEN", "")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "2105670102")
 
 def send_telegram_alert(message: str):
