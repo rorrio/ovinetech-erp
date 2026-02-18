@@ -8,10 +8,12 @@ from src.shared.database import create_db_and_tables
 from src.greenhouse import models as greenhouse_models
 from src.ovine_manager import models as ovine_models
 from src.cheese_factory import models as cheese_models
+from src.finance import models as finance_models
 
 from src.greenhouse.router import router as greenhouse_router
 from src.ovine_manager.router import router as ovine_manager_router
 from src.cheese_factory.router import router as cheese_factory_router
+from src.finance.router import router as finance_router
 
 from src.maintenance.scheduler import start_scheduler
 
@@ -28,6 +30,7 @@ app = FastAPI(title="OvineTech ERP", lifespan=lifespan)
 app.include_router(greenhouse_router)
 app.include_router(ovine_manager_router)
 app.include_router(cheese_factory_router)
+app.include_router(finance_router)
 
 @app.get("/")
 def read_root():

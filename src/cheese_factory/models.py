@@ -8,6 +8,10 @@ class LoteQuesoBase(SQLModel):
     tipo_queso: str
     litros_leche_usados: float
     
+    # Financials
+    costo_leche_total: float = Field(default=0.0)
+    costo_operativo: float = Field(default=0.0)
+    
     # Process Phase
     ph_inicial: Optional[float] = None
     ph_corte: Optional[float] = None
@@ -21,6 +25,16 @@ class LoteQuesoBase(SQLModel):
 class LoteQueso(LoteQuesoBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     maduracion_logs: List["MaduracionLog"] = Relationship(back_populates="lote_queso")
+
+    @property
+    def costo_total(self) -> float:
+        return self.costo_leche_total + self.costo_operativo
+    
+    @property
+    def costo_por_kg(self) -> float:
+        if self.peso_salida_prensa_kg and self.peso_salida_prensa_kg > 0:
+            return self.costo_total / self.peso_salida_prensa_kg
+        return 0.0
 
 class LoteQuesoCreate(LoteQuesoBase):
     pass
